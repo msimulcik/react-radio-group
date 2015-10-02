@@ -25,11 +25,15 @@ export default React.createClass({
     ]),
     onChange: PropTypes.func,
     children: PropTypes.func.isRequired,
+    radioFactory: PropTypes.func,
   },
 
   render: function() {
-    const {name, selectedValue, onChange, children} = this.props;
-    const renderedChildren = children(radio(name, selectedValue, onChange));
+    const {name, selectedValue, onChange, children, radioFactory} = this.props;
+
+    const finalRadioFactory = radioFactory || radio;
+
+    const renderedChildren = children(finalRadioFactory(name, selectedValue, onChange));
     return renderedChildren && React.Children.only(renderedChildren);
   }
 });
